@@ -63,13 +63,11 @@ template<int height, int width>
 void solver<height, width>::solver<height, width>::solve()
 {
 	solve_helper(star_count);
-	ans = b; //REMOVE THIS LATER
 }
 
 template<int height, int width>
 inline void solver<height, width>::update_star_count(int star_loc, enum star_action act)
 {
-	//std::cout << "called" << std::endl;
 	auto& board = b._board;
 	for(auto offset : offsets)
 	{
@@ -77,10 +75,8 @@ inline void solver<height, width>::update_star_count(int star_loc, enum star_act
 		if(b.is_in_bounds(star_loc, offset))
 		{
 			auto& cell = board[offset_loc];
-			//std::cout << "offset_loc: " << offset_loc << std::endl;
 			if(cell.is_constraint)
 			{
-			//std::cout << "offset_loc in if: " << offset_loc << std::endl;
 				if(act == star_action::STAR_ADD)
 					cell.constraint_value--;
 				else
@@ -91,16 +87,10 @@ inline void solver<height, width>::update_star_count(int star_loc, enum star_act
 	auto& cell = board[star_loc];
 	if(act == star_action::STAR_ADD)
 	{
-		//std::cout << "star_loc: " << star_loc << std::endl;	
-		//std::cout << "is_cons: " << cell.is_constraint << std::endl;
-		//std::cout << "is_zeroed_out: " << cell.is_zeroed_out << std::endl;
 		cell.contains_star = true;
-		//std::cout << b.to_string().str() << std::endl; 
 	}
 	else
 		cell.contains_star = false;
-	//std::cout <<  b.to_string().str() << std::endl; 
-	//std::cout << std::endl;
 }
 
 template<int height, int width>
@@ -163,7 +153,6 @@ void solver<height,width>::solve_helper(int stars_to_place)
 
 		/* For each adjacent entry, attempt to place the stars */
 		auto cur_pos = cell.pos;
-		//std::cout << "cur_pos: " << cur_pos << std::endl;
 		for(auto j = 0; j < offsets.size(); ++j)	
 		{
 			auto loc = cur_pos + offsets[j].first * width + offsets[j].second;
@@ -172,7 +161,6 @@ void solver<height,width>::solve_helper(int stars_to_place)
 			/* Place star if at a valid position that doesn't have a num or star yet */
 			if(b.is_in_bounds(cur_pos, offsets[j]) && is_cell_assignable(loc))
 			{
-				//std::cout << "here_9" << std::endl;
 				update_star_count(loc, star_action::STAR_ADD);
 				solve_helper(stars_to_place - 1);
 				assigned = true;

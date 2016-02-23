@@ -9,7 +9,7 @@ A basic tentaizu puzzle solver
 # To Build
 * mkdir build && cd build
 * cmake .. && make
-* ctest -v
+* ctest -V
 
 # Output
 * The board_files folder contains one board that is solved by the program
